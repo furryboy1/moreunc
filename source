@@ -1,3 +1,5 @@
+-- I copied moreunc and added some functions :3
+
 if getgenv and getgenv().MoreUNC then return end
 
 -- Definitions
