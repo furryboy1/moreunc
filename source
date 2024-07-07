@@ -1,5 +1,36 @@
--- Modified MoreUNC with new functions :3
+--[[-----------------------------------------------------------------------------------------------------------------
 
+    modified by FurryBoy (https://scriptblox.com/u/FurryBoy)
+
+    Credits:
+        vxsty (https://scriptblox.com/u/vxsty)
+    
+    hello very cool incognito / solara (mostly incognito because solara has most of these functions, just not all) script showcase!! 
+    pls dont steal source code :( 
+    also join https://discord.gg/gYhqMRBeZV because yes    
+
+    math support update because math is kewl
+    new update:
+    table loop update!!
+
+    -------------Changelogs-------------
+
+    To be added:
+        Add setfflag()
+        Add getfflag()
+        -- For these 2 above, i couldn't find solutions yet. 
+
+    Added:
+        setfpscap()
+        getfpscap()
+        hookfunction() -- not sure if it'll work
+        isnetworkowner() -- not sure if it'll work
+
+    ------------------------------------
+    
+------------------------------------------------------------------------------------------------------------------]]
+
+if not game:IsLoaded()then game.Loaded:Wait()end
 if getgenv and getgenv().MoreUNC then return end
 
 -- Definitions
@@ -16,7 +47,7 @@ local task=table.clone(task)
 local game=game -- game is game
 local oldGame=game
 
-local Version='1.1.6'
+local Version='1.2.0'
 
 local isDragging=false -- rconsole
 local dragStartPos=nil -- rconsole
@@ -1709,7 +1740,7 @@ end
 
 local Count=0
 local Total=0
-print("Running MoreUNC | Roblox "..version())
+print("Running MoreUNC | Roblox "..version().." | Discord https://discord.gg/gYhqMRBeZV")
 
 local funcs2={}
 for i, _ in pairs(funcs) do
