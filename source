@@ -20,11 +20,8 @@
         Add getfflag()
         -- For these 2 above, i couldn't find solutions yet. 
 
-    Added:
-        setfpscap()
-        getfpscap()
-        hookfunction() -- not sure if it'll work
-        isnetworkowner() -- not sure if it'll work
+    Changelogs:
+        Added gethwid()
 
     ------------------------------------
     
@@ -1734,6 +1731,41 @@ funcs.hookfunction=function(func, rep)
  for i,v in pairs(getfenv()) do
   if v==func then getfenv()[i] = rep end
  end
+end
+
+funcs.gethwid=function()
+ local hwidResponseData=request({
+  Url = 'https://httpbin.org/get',
+  Method = 'GET'
+ })
+ 
+ local hwid_decoded_body=game:GetService('HttpService'):JSONDecode(hwidResponseData.Body)
+ local hwid_keys={
+  "Syn-Fingerprint",
+  "Exploit-Guid",
+  "Krnl-Hwid",
+  "Sw-Fingerprint",
+  "Wave-Fingerprint",
+  "Celery-Fingerprint",
+  "Fluxus-Fingerprint",
+  "Codex-Fingerprint",
+  "Trigon-Fingerprint",
+  "Krampus-Fingerprint",
+  "MacSploit-Fingerprint",
+  "Solara-Fingerprint",
+  "Electron-Fingerprint",
+  "Hydrogen-Fingerprint",
+  "Delta-Fingerprint"
+ }
+
+ local exechwid = 'Executor HWID not found'   
+ for _,v in ipairs(hwid_keys)do
+  if hwid_decoded_body.headers[v]then
+    exechwid = hwid_decoded_body.headers[v]
+   break
+  end
+ end
+ return exechwid
 end
 
 -- END
