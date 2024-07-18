@@ -1747,7 +1747,7 @@ local hwid_keys={
  "Sw-Fingerprint",
  "Wave-Fingerprint",
  "Celery-Fingerprint",
- "Fluxus-Fingerprint",
+ "Flux-Fingerprint",
  "Codex-Fingerprint",
  "Trigon-Fingerprint",
  "Krampus-Fingerprint",
