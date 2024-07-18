@@ -44,7 +44,7 @@ local task=table.clone(task)
 local game=game -- game is game
 local oldGame=game
 
-local Version='1.2.0'
+local Version='1.2.6'
 
 local isDragging=false -- rconsole
 local dragStartPos=nil -- rconsole
@@ -1733,40 +1733,54 @@ funcs.hookfunction=function(func, rep)
  end
 end
 
-funcs.gethwid=function()
- local hwidResponseData=request({
-  Url = 'https://httpbin.org/get',
-  Method = 'GET'
- })
- 
- local hwid_decoded_body=game:GetService('HttpService'):JSONDecode(hwidResponseData.Body)
- local hwid_keys={
-  "Syn-Fingerprint",
-  "Exploit-Guid",
-  "Krnl-Hwid",
-  "Sw-Fingerprint",
-  "Wave-Fingerprint",
-  "Celery-Fingerprint",
-  "Fluxus-Fingerprint",
-  "Codex-Fingerprint",
-  "Trigon-Fingerprint",
-  "Krampus-Fingerprint",
-  "MacSploit-Fingerprint",
-  "Solara-Fingerprint",
-  "Electron-Fingerprint",
-  "Hydrogen-Fingerprint",
-  "Delta-Fingerprint"
- }
+--gethwid start
+local hwidResponseData=request({
+ Url = 'https://httpbin.org/get',
+ Method = 'GET'
+})
+    
+local hwid_decoded_body=HttpService:JSONDecode(hwidResponseData.Body)
+local hwid_keys={
+ "Syn-Fingerprint",
+ "Exploit-Guid",
+ "Krnl-Hwid",
+ "Sw-Fingerprint",
+ "Wave-Fingerprint",
+ "Celery-Fingerprint",
+ "Fluxus-Fingerprint",
+ "Codex-Fingerprint",
+ "Trigon-Fingerprint",
+ "Krampus-Fingerprint",
+ "MacSploit-Fingerprint",
+ "Solara-Fingerprint",
+ "Electron-Fingerprint",
+ "Hydrogen-Fingerprint",
+ "Delta-Fingerprint"
+}
 
- local exechwid = 'Executor HWID not found'   
- for _,v in ipairs(hwid_keys)do
-  if hwid_decoded_body.headers[v]then
-    exechwid = hwid_decoded_body.headers[v]
-   break
-  end
+local exechwid = nil
+for _,v in ipairs(hwid_keys)do
+ if hwid_decoded_body.headers[v]then
+  exechwid = hwid_decoded_body.headers[v]
+  break
  end
+end
+
+if not exechwid then
+ if not isfolder("MoreUNC_HWID") and not isfile("MoreUNC_HWID\\hwid_key.txt") then
+  local _chars,_rrr='1234567890abcdef',''
+  for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
+  exechwid = _rrr
+  makefolder("MoreUNC_HWID")
+  writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
+ end
+ exechwid = readfile("MoreUNC_HWID\\hwid_key.txt")
+end
+
+funcs.gethwid=function()
  return exechwid
 end
+--gethwid end
 
 -- END
 
