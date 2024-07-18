@@ -1,3 +1,4 @@
+local Version='1.2.7'
 --[[-----------------------------------------------------------------------------------------------------------------
 
     modified by FurryBoy (https://scriptblox.com/u/FurryBoy)
@@ -43,8 +44,6 @@ local task=table.clone(task)
 
 local game=game -- game is game
 local oldGame=game
-
-local Version='1.2.6'
 
 local isDragging=false -- rconsole
 local dragStartPos=nil -- rconsole
@@ -119,8 +118,10 @@ if not exechwid then
         for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
         exechwid=_rrr
         writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
+        writefile("MoreUNC_HWID\\Read Me.txt","warning, if you delete hwid_key.txt or edit something in it, your hwid will be gone and if you were whitelisted\nto scripts, then it will not work anymore, you need to ask the script owner to reset your\nhwid whitelist when you got a new hwid using moreUNC (unless you recover the hwid key)")
+    else
+        exechwid=readfile("MoreUNC_HWID\\hwid_key.txt")
     end
-    exechwid=readfile("MoreUNC_HWID\\hwid_key.txt")
 end
 
 local API_Dump_Url="https://raw.githubusercontent.com/MaximumADHD/Roblox-Client-Tracker/roblox/Mini-API-Dump.json"
@@ -239,7 +240,7 @@ Title.BorderSizePixel=0
 Title.Position=UDim2.new(0.0440017432, 0, 0, 0)
 Title.Size=UDim2.new(0, 164, 0, 30)
 Title.Font=Enum.Font.GothamMedium
-Title.Text="rconsole title"
+Title.Text="Console"
 Title.TextColor3=Color3.fromRGB(255, 255, 255)
 Title.TextSize=17.000
 Title.TextXAlignment=Enum.TextXAlignment.Left
@@ -1110,16 +1111,14 @@ funcs.syn_backup=funcs.syn
 
 
 funcs.getexecutorname=function()
- return 'MoreUNC', Version
+ return hwid_decoded_body.headers["User-Agent"], 'MoreUNC_v'..Version
 end
 funcs.identifyexecutor=funcs.getexecutorname
 funcs.http_request=getgenv().request or funcs.request
 funcs.getscripts=function()
  local a={};for i, v in pairs(game:GetDescendants()) do if v:IsA("LocalScript") or v:IsA("ModuleScript") then table.insert(a, v) end end return a
 end
-funcs.get_scripts=function()
- local a={};for i, v in pairs(game:GetDescendants()) do if v:IsA("LocalScript") or v:IsA("ModuleScript") then table.insert(a, v) end end return a
-end
+funcs.get_scripts=funcs.getscripts
 funcs.getmodules=function()
  local a={};for i, v in pairs(game:GetDescendants()) do if v:IsA("ModuleScript") then table.insert(a, v) end end return a
 end
@@ -1774,13 +1773,9 @@ funcs.hookfunction=function(func, rep)
  end
 end
 
---gethwid start
-
-
 funcs.gethwid=function()
  return exechwid
 end
---gethwid end
 
 funcs.getcallingscript = function()
  local s = debug.info(1, 's')
