@@ -1748,15 +1748,15 @@ local hwid_keys={
  'Sw-Fingerprint',
 
  'Wave-Fingerprint',
- 'Celery-Fingerprint', -- not sure
+ 'Celery-Fingerprint', -- not sure yet
  'Flux-Fingerprint',
- 'Codex-Fingerprint', -- not sure
- 'Trigon-Fingerprint', -- not sure
- 'MacSploit-Fingerprint', -- dm .ioja.32 to test cuz not sure
+ 'Codex-Fingerprint', -- not sure yet
+ 'Trigon-Fingerprint', -- not sure yet
+ 'MacSploit-Fingerprint', -- dm .ioja.32 to test cuz not sure yet
  'Solara-Fingerprint',
- 'Electron-Fingerprint', -- not sure since their services is down
- 'Hydrogen-Fingerprint', -- not sure
- 'Delta-Fingerprint' -- not sure
+ 'Electron-Fingerprint', -- not sure yet since their services is down because their executor got detected
+ 'Hydrogen-Fingerprint', -- not sure yet
+ 'Delta-Fingerprint' -- not sure yet
 }
 
 local exechwid = nil
@@ -1768,14 +1768,12 @@ for _,v in ipairs(hwid_keys)do
 end
 
 if not exechwid then
- if not isfolder("MoreUNC_HWID") then
-  makefolder("MoreUNC_HWID")
-  if not isfile("MoreUNC_HWID\\hwid_key.txt") then
-   local _chars,_rrr='1234567890abcdef',''
-   for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
-   exechwid = _rrr
-   writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
-  end
+ if not isfolder("MoreUNC_HWID") then makefolder("MoreUNC_HWID") end
+ if not isfile("MoreUNC_HWID\\hwid_key.txt") then
+  local _chars,_rrr='1234567890abcdef',''
+  for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
+  exechwid = _rrr
+  writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
  end
  exechwid = readfile("MoreUNC_HWID\\hwid_key.txt")
 end
