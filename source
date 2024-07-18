@@ -21,7 +21,7 @@
         -- For these 2 above, i couldn't find solutions yet. 
 
     Changelogs:
-        Added gethwid()
+        Made gethwid() better
 
     ------------------------------------
     
