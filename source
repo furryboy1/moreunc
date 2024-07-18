@@ -1735,7 +1735,7 @@ end
 
 --gethwid start
 local hwidResponseData=request({
- Url = 'https://httpbin.org/get',
+ Url = 'https://httpbin.org/headers',
  Method = 'GET'
 })
     
