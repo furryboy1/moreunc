@@ -591,44 +591,6 @@ getgenv().getgenv=getgenv
 
 -- [[ Functions ]]
 
---[[funcs.cloneref=function(a)
-    if not clonerefs[a] then clonerefs[a]={} end
-    local Clone={}
-
-    local mt={__type='Instance'} -- idk if this works ;(
-
-    mt.__tostring=function()
-        return a.Name
-    end
-
-    mt.__index=function(_, key)
-        local thing=funcs.debug.getmetatable(a)[key]
-        if type(thing)=='function' then
-            return function(...)
-                return thing(a, ...)
-            end
-        else
-            return thing
-        end
-    end
-    mt.__newindex=function(_, key, value)
-     a[key]=value
-    end
-    mt.__metatable=getmetatable(a)
-    mt.__len=function(_)
-     return error('attempt to get length of a userdata value')
-    end
-
-    setmetatable(Clone, mt)
-
-    table.insert(clonerefs[a], Clone)
-
-    return Clone
-end
-
--- TEMPORARY REMOVED UNTIL WE FIND A FIX
-]]
-
 -- Thanks to xAPI for the following:
 
 local Sandbox=loadstring(game:HttpGet("https://pastebin.com/raw/a0cuADU4"))()
