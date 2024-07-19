@@ -1774,13 +1774,14 @@ funcs.isnetworkowner=function(part)
  return part.ReceiveAge==0 and not part.Anchored and part.Velocity.Magnitude > 0
 end
 
-if getfflag then
- funcs.getfpscap=function()
-  return getfflag("TaskSchedulerTargetFps")
- end
+
+funcs.getfpscap=function()
+ if not getfflag then return error("Unable to get fps cap: function getfflag does not exist.")end
+ return getfflag("TaskSchedulerTargetFps")
 end
 
 funcs.setfpscap=function(value)
+ if not setfflag then return error("Unable to apply fps cap: function setfflag does not exist.")end
  SetTo=value or 0
  if SetTo==0 then SetTo=SetTo>0 and 1.0/SetTo or 1.0/10000.0 end
  setfflag("TaskSchedulerTargetFps", tostring(SetTo))
