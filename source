@@ -1,6 +1,6 @@
 --[[-----------------------------------------------------------------------------------------------------------------
 
-    modified by FurryBoy (https://scriptblox.com/u/FurryBoy)
+    modified by FurryBoy (https://scriptblox.com/u/furryboy) banned on scriptblox 
 
     Credits:
         vxsty (https://scriptblox.com/u/vxsty)
@@ -30,7 +30,7 @@
 if not game:IsLoaded()then game.Loaded:Wait()end
 if getgenv and getgenv().MoreUNC then return end
 
-local Version='1.2.8'
+local Version='1.2.9'
 
 -- Definitions
 local table=table.clone(table) -- Prevent modifications from other scripts
