@@ -82,9 +82,9 @@ local HttpService=game:GetService('HttpService');
 local Log=game:GetService('LogService');
 
 -- Load properties (CREDITS TO DEUCES ON DISCORD)
+local exechwid = nil
 if not gethwid then
     local hwid_response_data=request({Url='https://httpbin.org/headers',Method='GET'})
-        
     local hwid_decoded_body=HttpService:JSONDecode(hwid_response_data.Body)
     --[[
     local hwid_keys={
@@ -94,7 +94,6 @@ if not gethwid then
         'Krnl-Hwid',
         'Sw-Fingerprint',
         'Wave-Fingerprint',
-        'Celery-Fingerprint', -- not sure yet
         'Flux-Fingerprint',
         'Codex-Fingerprint', -- not sure yet
         'Trigon-Fingerprint', -- not sure yet
@@ -114,7 +113,6 @@ if not gethwid then
     end
     --]]
 
-    local exechwid = nil
     for key,value in pairs(hwid_decoded_body.headers)do
         if string.find(key:lower(),"fingerprint")then
             exechwid=value
@@ -125,7 +123,7 @@ if not gethwid then
     if not exechwid then
         if not isfolder("MoreUNC_HWID")then makefolder("MoreUNC_HWID")end
         if not isfile("MoreUNC_HWID\\hwid_key.txt")then
-            local _chars,_rrr='1234567890abcdef',''
+            _chars,_rrr='1234567890abcdef',''
             for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
             exechwid=_rrr
             writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
@@ -627,7 +625,8 @@ getgenv().getgenv=getgenv
 
     return Clone
 end
-TEMPORARY REMOVED UNTIL WE FIND A FIX
+
+-- TEMPORARY REMOVED UNTIL WE FIND A FIX
 ]]
 
 -- Thanks to xAPI for the following:
@@ -1775,8 +1774,10 @@ funcs.isnetworkowner=function(part)
  return part.ReceiveAge==0 and not part.Anchored and part.Velocity.Magnitude > 0
 end
 
-funcs.getfpscap=function()
- return getfflag("TaskSchedulerTargetFps")
+if getfflag then
+ funcs.getfpscap=function()
+  return getfflag("TaskSchedulerTargetFps")
+ end
 end
 
 funcs.setfpscap=function(value)
