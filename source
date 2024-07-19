@@ -1,4 +1,3 @@
-local Version='1.2.7'
 --[[-----------------------------------------------------------------------------------------------------------------
 
     modified by FurryBoy (https://scriptblox.com/u/FurryBoy)
@@ -30,6 +29,8 @@ local Version='1.2.7'
 
 if not game:IsLoaded()then game.Loaded:Wait()end
 if getgenv and getgenv().MoreUNC then return end
+
+local Version='1.2.8'
 
 -- Definitions
 local table=table.clone(table) -- Prevent modifications from other scripts
@@ -81,55 +82,57 @@ local HttpService=game:GetService('HttpService');
 local Log=game:GetService('LogService');
 
 -- Load properties (CREDITS TO DEUCES ON DISCORD)
-local hwid_response_data=request({Url='https://httpbin.org/headers',Method='GET'})
-    
-local hwid_decoded_body=HttpService:JSONDecode(hwid_response_data.Body)
---[[
-local hwid_keys={
-    'Syn-Fingerprint',
-    'Krampus-Fingerprint',
-    'Exploit-Guid',
-    'Krnl-Hwid',
-    'Sw-Fingerprint',
-    'Wave-Fingerprint',
-    'Celery-Fingerprint', -- not sure yet
-    'Flux-Fingerprint',
-    'Codex-Fingerprint', -- not sure yet
-    'Trigon-Fingerprint', -- not sure yet
-    'MacSploit-Fingerprint', -- dm .ioja.32 to test cuz not sure yet
-    'Solara-Fingerprint',
-    'Electron-Fingerprint', -- not sure yet since their services is down
-    'Hydrogen-Fingerprint', -- not sure yet
-    'Delta-Fingerprint' -- not sure yet
-}
+if not gethwid then
+    local hwid_response_data=request({Url='https://httpbin.org/headers',Method='GET'})
+        
+    local hwid_decoded_body=HttpService:JSONDecode(hwid_response_data.Body)
+    --[[
+    local hwid_keys={
+        'Syn-Fingerprint',
+        'Krampus-Fingerprint',
+        'Exploit-Guid',
+        'Krnl-Hwid',
+        'Sw-Fingerprint',
+        'Wave-Fingerprint',
+        'Celery-Fingerprint', -- not sure yet
+        'Flux-Fingerprint',
+        'Codex-Fingerprint', -- not sure yet
+        'Trigon-Fingerprint', -- not sure yet
+        'MacSploit-Fingerprint', -- dm .ioja.32 to test cuz not sure yet
+        'Solara-Fingerprint',
+        'Electron-Fingerprint', -- not sure yet since their services is down
+        'Hydrogen-Fingerprint', -- not sure yet
+        'Delta-Fingerprint' -- not sure yet
+    }
 
-local exechwid=nil
-for _,v in ipairs(hwid_keys)do
-    if hwid_decoded_body.headers[v]then
-        exechwid=hwid_decoded_body.headers[v]
-        break
+    local exechwid=nil
+    for _,v in ipairs(hwid_keys)do
+        if hwid_decoded_body.headers[v]then
+            exechwid=hwid_decoded_body.headers[v]
+            break
+        end
     end
-end
---]]
+    --]]
 
-local exechwid = nil
-for key,value in pairs(hwid_decoded_body.headers)do
-    if string.find(key:lower(),"fingerprint")then
-        exechwid=value
-        break
+    local exechwid = nil
+    for key,value in pairs(hwid_decoded_body.headers)do
+        if string.find(key:lower(),"fingerprint")then
+            exechwid=value
+            break
+        end
     end
-end
 
-if not exechwid then
-    if not isfolder("MoreUNC_HWID")then makefolder("MoreUNC_HWID")end
-    if not isfile("MoreUNC_HWID\\hwid_key.txt")then
-        local _chars,_rrr='1234567890abcdef',''
-        for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
-        exechwid=_rrr
-        writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
-        writefile("MoreUNC_HWID\\Read Me.txt","warning, if you delete hwid_key.txt or edit something in it, your hwid will be gone and if you were whitelisted\nto scripts, then it will not work anymore, you need to ask the script owner to reset your\nhwid whitelist when you got a new hwid using moreUNC (unless you recover the hwid key)")
-    else
-        exechwid=readfile("MoreUNC_HWID\\hwid_key.txt")
+    if not exechwid then
+        if not isfolder("MoreUNC_HWID")then makefolder("MoreUNC_HWID")end
+        if not isfile("MoreUNC_HWID\\hwid_key.txt")then
+            local _chars,_rrr='1234567890abcdef',''
+            for i=1,96 do pa=math.random(#_chars)_rrr=_rrr.._chars:sub(pa,pa)end
+            exechwid=_rrr
+            writefile("MoreUNC_HWID\\hwid_key.txt",_rrr)
+            writefile("MoreUNC_HWID\\Read Me.txt","warning, if you delete hwid_key.txt or edit something in it, your hwid will be gone and if you were whitelisted\nto scripts, then it will not work anymore, you need to ask the script owner to reset your\nhwid whitelist when you got a new hwid using moreUNC (unless you recover the hwid key)")
+        else
+            exechwid=readfile("MoreUNC_HWID\\hwid_key.txt")
+        end
     end
 end
 
@@ -1126,7 +1129,7 @@ funcs.syn_backup=funcs.syn
 
 
 funcs.getexecutorname=function()
- return hwid_decoded_body.headers["User-Agent"], 'MoreUNC_v'..Version
+ return "MoreUNC", Version
 end
 funcs.identifyexecutor=funcs.getexecutorname
 funcs.http_request=getgenv().request or funcs.request
