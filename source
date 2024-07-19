@@ -81,16 +81,16 @@ local HttpService=game:GetService('HttpService');
 local Log=game:GetService('LogService');
 
 -- Load properties (CREDITS TO DEUCES ON DISCORD)
-local hwidResponseData=request({Url='https://httpbin.org/headers',Method='GET'})
+local hwid_response_data=request({Url='https://httpbin.org/headers',Method='GET'})
     
-local hwid_decoded_body=HttpService:JSONDecode(hwidResponseData.Body)
+local hwid_decoded_body=HttpService:JSONDecode(hwid_response_data.Body)
+--[[
 local hwid_keys={
     'Syn-Fingerprint',
     'Krampus-Fingerprint',
     'Exploit-Guid',
     'Krnl-Hwid',
     'Sw-Fingerprint',
-
     'Wave-Fingerprint',
     'Celery-Fingerprint', -- not sure yet
     'Flux-Fingerprint',
@@ -107,6 +107,15 @@ local exechwid=nil
 for _,v in ipairs(hwid_keys)do
     if hwid_decoded_body.headers[v]then
         exechwid=hwid_decoded_body.headers[v]
+        break
+    end
+end
+--]]
+
+local exechwid = nil
+for key,value in pairs(hwid_decoded_body.headers)do
+    if string.find(key:lower(),"fingerprint")then
+        exechwid=value
         break
     end
 end
@@ -873,7 +882,6 @@ funcs.syn.secure_call=function(func) -- Does not do a secure call, just pcalls i
  return pcall(func)
 end
 
-
 funcs.isreadonly=function(tbl)
  if type(tbl) ~= 'table' then return false end
  return table.isfrozen(tbl)
@@ -885,12 +893,19 @@ funcs.setreadonly=function(tbl, cond)
   return funcs.deepclone(tbl)
  end
 end
-funcs.httpget=function(url)
+funcs.HttpGet=function(url)
  return game:HttpGet(url)
 end
-funcs.httppost=function(url, body, contenttype)
+funcs.HttpGetAsync=function(url)
+ return game:HttpGetAsync(url)
+end
+funcs.HttpPostAsync=function(url, body, contenttype)
  return game:HttpPostAsync(url, body, contenttype)
 end
+funcs.PostAsync=function(url, body, contenttype)
+ return game:PostAsync(url, body, contenttype)
+end
+funcs.HttpPost=funcs.HttpPostAsync
 funcs.request=function(args)
  local Body=nil
  local Timeout=0
