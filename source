@@ -1,6 +1,6 @@
 --[[-----------------------------------------------------------------------------------------------------------------
 
-    modified by FurryBoy (https://scriptblox.com/u/furryboy) banned on scriptblox 
+    modified by FurryBoy (https://scriptblox.com/u/furryboy) banned on scriptblox
 
     Credits:
         vxsty (https://scriptblox.com/u/vxsty)
@@ -16,12 +16,12 @@
     -------------Changelogs-------------
 
     To be added:
-        Add setfflag()
-        Add getfflag()
-        -- For these 2 above, i couldn't find solutions yet. 
+        setfflag()
+        getfflag()
+        -- For these 2 above, i couldn't find solutions yet (probably will be added)
 
     Changelogs:
-        Made gethwid() better
+        Archived some functions as they are not necessary.
 
     ------------------------------------
     
@@ -591,6 +591,10 @@ getgenv().getgenv=getgenv
 
 -- [[ Functions ]]
 
+funcs.cloneref=function(a) -- TEMP
+	local c,b=pcall(function()return a:Clone()end)return c and b or a
+end
+
 -- Thanks to xAPI for the following:
 
 local Sandbox=loadstring(game:HttpGet("https://pastebin.com/raw/a0cuADU4"))()
@@ -760,7 +764,8 @@ end
 funcs.isgameactive=funcs.isrbxactive
 funcs.gethui=function()
  local s, H=pcall(function()
-  return game:GetService("CoreGui").RobloxGui
+  -- return game:GetService("CoreGui").RobloxGui
+  return game:GetService("CoreGui")
  end)
  if H then
   if not hui.Parent then
@@ -857,19 +862,6 @@ funcs.setreadonly=function(tbl, cond)
   return funcs.deepclone(tbl)
  end
 end
-funcs.HttpGet=function(url)
- return game:HttpGet(url)
-end
-funcs.HttpGetAsync=function(url)
- return game:HttpGetAsync(url)
-end
-funcs.HttpPostAsync=function(url, body, contenttype)
- return game:HttpPostAsync(url, body, contenttype)
-end
-funcs.PostAsync=function(url, body, contenttype)
- return game:PostAsync(url, body, contenttype)
-end
-funcs.HttpPost=funcs.HttpPostAsync
 funcs.request=function(args)
  local Body=nil
  local Timeout=0
