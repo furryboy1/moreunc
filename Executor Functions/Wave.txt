@@ -1,3 +1,5 @@
+-- Wave executor functions
+
 getclipboard
 firesignal
 makefolder
