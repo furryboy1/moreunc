@@ -1,0 +1,3 @@
+-- it's not really necessary to use this script as it is a command for infinite yield reborn script
+-- https://github.com/fuckusfm/infiniteyield-reborn
+loadstring(game:HttpGet("https://github.com/FurryBoyYT/moreunc/raw/main/source"))({ShowLogs = true})
