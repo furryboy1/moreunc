@@ -29,6 +29,8 @@ if not game:IsLoaded()then game.Loaded:Wait()end
 if getgenv and getgenv().MoreUNC then return end
 
 local Version='1.2.9'
+local options = ({...})[1]or{ShowLogs=true}
+local ifShowLogs = options.ShowLogs
 
 -- Definitions
 local table=table.clone(table) -- Prevent modifications from other scripts
@@ -777,14 +779,14 @@ funcs.gethui=function()
  end
  return hui
 end
-if getgenv().getrenv and #getgenv().getrenv()==0 or not getgenv().getrenv then
+if getgenv().getrenv and#getgenv().getrenv()==0 or not getgenv().getrenv then
  getgenv().getrenv=nil
  getgenv().getrenv=function() -- Override incognito's getrenv
   return renv -- couldn't think of a better way to implement it
  end
 end
 funcs.setclipboard=function(data)
-    repeat task.wait() until ClipboardQueue:Current()[1]==data or ClipboardQueue:IsEmpty()
+    repeat task.wait()until ClipboardQueue:Current()[1]==data or ClipboardQueue:IsEmpty()
     ClipboardQueue:Queue(data)
     local old=game:GetService("UserInputService"):GetFocusedTextBox()
     local copy=ClipboardQueue:Current()[1]
@@ -838,7 +840,7 @@ funcs.syn.protect_gui=function(gui)
  names[gui]={name=gui.Name,parent=gui.Parent}
  protecteduis[gui]=gui
  gui.Name=funcs.crypt.random(64) -- 64 byte string, removed hashing cuz its useless lmao
- gui.Parent=gethui()
+ gui.Parent=gethui().RobloxGui
 end
 funcs.syn.unprotect_gui=function(gui)
  if names[gui] then gui.Name=names[gui].name gui.Parent=names[gui].parent end protecteduis[gui]=nil
@@ -1777,10 +1779,9 @@ end
 
 -- END
 
-local getResults=print_moreunc_results
 local Count=0
 local Total=0
-print("Running MoreUNC | Roblox "..version().." | Discord https://discord.gg/gYhqMRBeZV")
+if ifShowLogs then print('Running MoreUNC | Roblox '..version()..' | Discord https://discord.gg/gYhqMRBeZV')end
 
 local funcs2={}
 for i,_ in pairs(funcs)do
@@ -1799,16 +1800,16 @@ end
 for _,i in pairs(funcs2)do
  local v=funcs[i]
  local Result=SafeOverride(i,v)
- if getResults then
-  if Result==2 then Count=Count+1 end
-  local str=Result==1 and('[⛔] %s already exists.'):format(i) or Result==2 and("[✅] Added %s%s to the global environment. (%d/%d)"):format(i,type(v)=='function'and'()'or'',Count,Total) or Result~=1 and Result~=2 and("[⛔] Unknown result for %s."):format(i)
+ if Result==2 then Count=Count+1 end
+ if ifShowLogs then
+  local str=Result==1 and('[⛔] %s already exists.'):format(i)or Result==2 and('[✅] Added %s%s to the global environment. (%d/%d)'):format(i,type(v)=='function'and'()'or'',Count,Total) or Result~=1 and Result~=2 and('[⛔] Unknown result for %s.'       ):format(i)
   print(str)
  end
 end
 
 syn.protect_gui(DrawingDict)
 syn.protect_gui(ClipboardUI)
-if getResults then
+if ifShowLogs then
  print('Done adding functions!')
  QueueGetIdentity()
 end
