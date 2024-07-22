@@ -16,14 +16,12 @@
     -------------Changelogs-------------
 
     To be added:
-        -- restorefunction()
+        restorefunction()
 
     Changelogs:
         Archived some functions as they are not necessary.
 
     ------------------------------------
-    
-    Goal: 100% unc (if even possible 😭)
 
 ------------------------------------------------------------------------------------------------------------------]]
 
@@ -1745,6 +1743,10 @@ funcs.hookfunction=function(func, rep)
  for i,v in pairs(getfenv()) do
   if v==func then getfenv()[i] = rep end
  end
+end
+
+funcs.restorefunction = function(func)
+    --code here
 end
 
 funcs.gethwid=function()
