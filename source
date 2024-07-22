@@ -16,9 +16,7 @@
     -------------Changelogs-------------
 
     To be added:
-        setfflag()
-        getfflag()
-        -- For these 2 above, i couldn't find solutions yet (probably will be added)
+        -- restorefunction()
 
     Changelogs:
         Archived some functions as they are not necessary.
