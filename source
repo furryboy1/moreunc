@@ -1273,6 +1273,9 @@ AddElement('restorefunction', function()
         end
     end
 end)
+AddElement('gethwid', function()
+	return exechwid
+end)
 
 -- END
 
