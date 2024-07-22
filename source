@@ -17,6 +17,7 @@
 
     To be added:
         restorefunction()
+        restoreclosure()
 
     Changelogs:
         Archived some functions as they are not necessary.
@@ -1577,18 +1578,18 @@ funcs.rconsoledestroy=function()
     if ConsoleClone then ConsoleClone:Destroy() end
     ConsoleClone=nil
 end
-funcs.rconsoleprint=function(msg, cc)
+funcs.rconsoleprint=function(msg,cc)
     local CONSOLE=ConsoleClone or Console
 	repeat task.wait() until ConsoleQueue:IsEmpty()
 	msg=tostring(msg)
 	local last_color=nil
 
-	msg=msg:gsub('@@(%a+)@@', function(color)
+	msg=msg:gsub('@@(%a+)@@',function(color)
 		local colorName=color:upper()
 		local rgbColor=colors[colorName]
 		if rgbColor then
 			local fontTag=string.format('<font color="rgb(%d,%d,%d)">', rgbColor.R * 255, rgbColor.G * 255, rgbColor.B * 255)
-			local result=last_color and '</font>' .. fontTag or fontTag
+			local result=last_color and'</font>'..fontTag or fontTag
 			last_color=colorName
 			return result
 		else
@@ -1597,11 +1598,11 @@ funcs.rconsoleprint=function(msg, cc)
 	end)
 
 	if last_color then
-		msg=msg .. '</font>'
+		msg=msg..'</font>'
 	end
 	
-	if msg:match('<font color=".+">.+</font>') then
-	 if msg:match('<font color=".+"></font>')==msg then MessageColor=colors[last_color] return end
+	if msg:match('<font color=".+">.+</font>')then
+	 if msg:match('<font color=".+"></font>')==msg then MessageColor=colors[last_color]return end
 	end
 	
 	local tmp=MessageTemplate:Clone()
@@ -1612,7 +1613,7 @@ funcs.rconsoleprint=function(msg, cc)
 end
 funcs.rconsoleinput=function()
     local CONSOLE=ConsoleClone or Console
-    repeat task.wait() until ConsoleQueue:IsEmpty()
+    repeat task.wait()until ConsoleQueue:IsEmpty()
     ConsoleQueue:Queue('input')
     local box=InputTemplate:Clone()
     local val
@@ -1629,8 +1630,8 @@ funcs.rconsoleinput=function()
 
     local FOCUSED=false
     while true do
-     if box.Text:sub(#box.Text, #box.Text)=='_' or box.Text=='' or not box:IsFocused() then
-        box.TextColor3=Color3.fromRGB(255, 255, 255)
+     if box.Text:sub(#box.Text, #box.Text)=='_'or box.Text==''or not box:IsFocused()then
+        box.TextColor3=Color3.fromRGB(255,255,255)
         box.Text=box.Text .. '_'
         
         for _=1, 100 do
@@ -1640,14 +1641,14 @@ funcs.rconsoleinput=function()
                 box.TextColor3=MessageColor
                 break
             end
-            box.Text=box.Text:sub(#box.Text, #box.Text)=='_' and box.Text:sub(#box.Text-1, #box.Text-1) or box.Text .. '_'
+            box.Text=box.Text:sub(#box.Text,#box.Text)=='_'and box.Text:sub(#box.Text-1,#box.Text-1)or box.Text..'_'
         end
         if FOCUSED then break end
      else
         task.wait(0.1)
      end
     end
-    repeat task.wait() until val
+    repeat task.wait()until val
     return val
 end
 funcs.rconsolename=function(a)
@@ -1657,36 +1658,36 @@ funcs.rconsolename=function(a)
   Console.ConsoleFrame.Title.Text=a
  end
 end
-funcs.printconsole=function(msg, r, g, b)
+funcs.printconsole=function(msg,r,g,b)
  r=r or 0
  g=g or 0
  b=b or 0
- rconsoleprint(msg, Color3.fromRGB(r, g, b))
+ rconsoleprint(msg,Color3.fromRGB(r,g,b))
 end
 funcs.rconsoleclear=function()
  if ConsoleClone then
- for i, v in pairs(ConsoleClone.ConsoleFrame.Holder:GetChildren()) do
-  if v.ClassName=='TextLabel' or v.ClassName=='TextBox' then v:Destroy() end
+ for i,v in pairs(ConsoleClone.ConsoleFrame.Holder:GetChildren())do
+  if v.ClassName=='TextLabel'or v.ClassName=='TextBox'then v:Destroy()end
  end
  else
-  for i, v in pairs(Console.ConsoleFrame.Holder:GetChildren()) do
-   if v.ClassName=='TextLabel' or v.ClassName=='TextBox' then v:Destroy() end
+  for i,v in pairs(Console.ConsoleFrame.Holder:GetChildren()) do
+   if v.ClassName=='TextLabel'or v.ClassName=='TextBox'then v:Destroy()end
   end
  end
 end
 funcs.rconsoleinfo=function(a)
- rconsoleprint('[INFO]: ' .. tostring(a))
+ rconsoleprint('[INFO]: '..tostring(a))
 end
 funcs.rconsolewarn=function(a)
- rconsoleprint('[*]: ' .. tostring(a))
+ rconsoleprint('[*]: '..tostring(a))
 end
 funcs.rconsoleerr=function(a)
  local clr=MessageColor
  local oldColor
- for i, v in pairs(colors) do
+ for i,v in pairs(colors)do
   if clr==v then oldColor=i break end
  end
- rconsoleprint(string.format('[@@RED@@*@@%s@@]: %s', oldColor, tostring(a)))
+ rconsoleprint(string.format('[@@RED@@*@@%s@@]: %s',oldColor,tostring(a)))
 end
 funcs.rconsoleinputasync=funcs.rconsoleinput
 funcs.consolecreate=funcs.rconsolecreate
@@ -1698,11 +1699,11 @@ funcs.consolesettitle=funcs.rconsolename
 
 funcs.queue_on_teleport=function(scripttoexec) -- WARNING: MUST HAVE MOREUNC IN AUTO EXECUTE FOR THIS TO WORK.
  local newTPService={
-  __index=function(self, key)
+  __index=function(self,key)
    if key=='Teleport' then
-    return function(gameId, player, teleportData, loadScreen)
-      teleportData={teleportData, MOREUNCSCRIPTQUEUE=scripttoexec}
-      return oldGame:GetService("TeleportService"):Teleport(gameId, player, teleportData, loadScreen)
+    return function(gameId,player,teleportData,loadScreen)
+      teleportData={teleportData MOREUNCSCRIPTQUEUE=scripttoexec}
+      return oldGame:GetService("TeleportService"):Teleport(gameId,player,teleportData,loadScreen)
     end
    end
   end
@@ -1723,9 +1724,8 @@ end
 funcs.queueonteleport=funcs.queue_on_teleport
 
 funcs.isnetworkowner=function(part)
- return part.ReceiveAge==0 and not part.Anchored and part.Velocity.Magnitude > 0
+ return part.ReceiveAge==0 and not part.Anchored and part.Velocity.Magnitude>0
 end
-
 
 funcs.getfpscap=function()
  if not getfflag then return error("Unable to get fps cap: function getfflag does not exist.")end
@@ -1736,27 +1736,42 @@ funcs.setfpscap=function(value)
  if not setfflag then return error("Unable to apply fps cap: function setfflag does not exist.")end
  SetTo=value or 0
  if SetTo==0 then SetTo=SetTo>0 and 1.0/SetTo or 1.0/10000.0 end
- setfflag("TaskSchedulerTargetFps", tostring(SetTo))
+ setfflag("TaskSchedulerTargetFps",tostring(SetTo))
 end
 
-funcs.hookfunction=function(func, rep)
- for i,v in pairs(getfenv()) do
-  if v==func then getfenv()[i] = rep end
- end
+getgenv().__restore_storage={}
+
+funcs.hookfunction=function(func,rep)
+    for i,v in pairs(getfenv())do
+        if v==func then 
+            getfenv()[i]=rep
+            getgenv().__restore_storage[i]=rep
+            break
+        end
+    end
 end
 
-funcs.restorefunction = function(func)
-    --code here
+funcs.restorefunction=function(func)
+    for i,v in pairs(getfenv())do
+        if v==func then
+            for k,j in pairs(getgenv().__restore_storage)do
+                if i==k and typeof(k) == "function" then
+                    getfenv()[i]=k
+                end
+            end
+            break
+        end
+    end
 end
 
 funcs.gethwid=function()
  return exechwid
 end
 
-funcs.getcallingscript = function()
- local s = debug.info(1, 's')
- for i, v in next, game:GetDescendants() do
-  if v:GetFullName() == s then return v end
+funcs.getcallingscript=function()
+ local s=debug.info(1,'s')
+ for i,v in next,game:GetDescendants()do
+  if v:GetFullName()==s then return v end
  end
  return nil
 end
@@ -1768,24 +1783,24 @@ local Total=0
 print("Running MoreUNC | Roblox "..version().." | Discord https://discord.gg/gYhqMRBeZV")
 
 local funcs2={}
-for i, _ in pairs(funcs) do
- table.insert(funcs2, i)
+for i,_ in pairs(funcs)do
+ table.insert(funcs2,i)
 end
-table.sort(funcs2, function(a, b)
+table.sort(funcs2,function(a,b)
  return string.byte(a:lower())<string.byte(b:lower())
 end)
 
-for i, v in pairs(funcs2) do
- if not getgenv()[i] then
-  Total=Total + 1
+for i,v in pairs(funcs2)do
+ if not getgenv()[i]then
+  Total=Total+1
  end
 end
 
-for _, i in pairs(funcs2) do
+for _,i in pairs(funcs2)do
  local v=funcs[i]
- local Result=SafeOverride(i, v)
- if Result==2 then Count=Count + 1 end
- local str=Result==1 and ('[⛔] %s already exists.'):format(i) or Result==2 and ("[✅] Added %s%s to the global environment. (%d/%d)"):format(i, type(v)=='function' and '()' or '', Count, Total) or Result ~= 1 and Result ~= 2 and ("[⛔] Unknown result for %s."):format(i)
+ local Result=SafeOverride(i,v)
+ if Result==2 then Count=Count+1 end
+ local str=Result==1 and('[⛔] %s already exists.'):format(i) or Result==2 and ("[✅] Added %s%s to the global environment. (%d/%d)"):format(i,type(v)=='function'and'()'or'',Count,Total) or Result~=1 and Result~=2 and("[⛔] Unknown result for %s."):format(i)
  print(str)
 end
 
