@@ -1702,7 +1702,7 @@ funcs.queue_on_teleport=function(scripttoexec) -- WARNING: MUST HAVE MOREUNC IN 
   __index=function(self,key)
    if key=='Teleport' then
     return function(gameId,player,teleportData,loadScreen)
-      teleportData={teleportData MOREUNCSCRIPTQUEUE=scripttoexec}
+      teleportData={teleportData, MOREUNCSCRIPTQUEUE=scripttoexec}
       return oldGame:GetService("TeleportService"):Teleport(gameId,player,teleportData,loadScreen)
     end
    end
