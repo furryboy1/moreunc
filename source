@@ -341,7 +341,7 @@ local Base64 = AddElement('base64', {
 			if #x ~= 8 then return '' end
 			local c = 0
 			for i = 1, 8 do
-				c = c + (x:sub(i, i) == '1' and 2^(8 - i) or 0)=
+				c = c + (x:sub(i, i) == '1' and 2^(8 - i) or 0)
 			end
 			return string.char(c)
 		end))
