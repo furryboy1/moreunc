@@ -16,11 +16,10 @@
     -------------Changelogs-------------
 
     To be added:
-        restorefunction()
         restoreclosure()
 
     Changelogs:
-        Archived some functions as they are not necessary.
+        Added restorefunction()
 
     ------------------------------------
 
@@ -1778,6 +1777,7 @@ end
 
 -- END
 
+local getResults=print_moreunc_results
 local Count=0
 local Total=0
 print("Running MoreUNC | Roblox "..version().." | Discord https://discord.gg/gYhqMRBeZV")
@@ -1799,13 +1799,17 @@ end
 for _,i in pairs(funcs2)do
  local v=funcs[i]
  local Result=SafeOverride(i,v)
- if Result==2 then Count=Count+1 end
- local str=Result==1 and('[⛔] %s already exists.'):format(i) or Result==2 and ("[✅] Added %s%s to the global environment. (%d/%d)"):format(i,type(v)=='function'and'()'or'',Count,Total) or Result~=1 and Result~=2 and("[⛔] Unknown result for %s."):format(i)
- print(str)
+ if getResults then
+  if Result==2 then Count=Count+1 end
+  local str=Result==1 and('[⛔] %s already exists.'):format(i) or Result==2 and("[✅] Added %s%s to the global environment. (%d/%d)"):format(i,type(v)=='function'and'()'or'',Count,Total) or Result~=1 and Result~=2 and("[⛔] Unknown result for %s."):format(i)
+  print(str)
+ end
 end
 
 syn.protect_gui(DrawingDict)
 syn.protect_gui(ClipboardUI)
-print('Done adding functions!')
-QueueGetIdentity()
+if getResults then
+ print('Done adding functions!')
+ QueueGetIdentity()
+end
 getgenv().MoreUNC=true
