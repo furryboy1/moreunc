@@ -1249,12 +1249,13 @@ AddElement('restorefunction', function()
 end)
 if not gethwid then
 	local exechwid = nil
+	local file = "data.json"
     local hwid_response=request({Url='https://httpbin.org/headers',Method='GET'})
     local hwid_decoded=HttpService:JSONDecode(hwid_response.Body)
-	local hwid_warning_message=[[⚠️ WARNING ⚠️
-	If you delete or edit anything in hwid.txt, your hwid will be lost.
+	local hwid_warning_message=([[⚠️ WARNING ⚠️
+	If you delete or edit anything in %s, your hwid will be lost.
 	If your hwid was whitelisted on scripts, they will no longer work.
-	You will need to reset your hwid whitelist when you get a new hwid when using MoreUNC.]]
+	You will need to reset your hwid whitelist when you get a new hwid when using MoreUNC.]]):format(file)
 
     for key,value in pairs(hwid_decoded.headers)do
         if string.find(key:lower(),"fingerprint")then
@@ -1265,14 +1266,15 @@ if not gethwid then
 
     if not exechwid then
         if not isfolder("MoreUNC_HWID")then makefolder("MoreUNC_HWID")end
-        if not isfile("MoreUNC_HWID\\hwid.txt")then
+        if not isfile("MoreUNC_HWID\\"..file)then
             c_,r_='1234567890abcdef',''
             for i=1,96 do pa=math.random(#c_)r_=r_..c_:sub(pa,pa)end
-            exechwid=r_
-            writefile("MoreUNC_HWID\\hwid.txt",r_)
-            writefile("MoreUNC_HWID\\Read Me.txt",warning_message)
+			hwid_json_encoded=HttpService:JSONEncode({hwid=r_})
+            exechwid=
+            writefile("MoreUNC_HWID\\"..file,hwid_json_encoded)
+            writefile("MoreUNC_HWID\\READ ME.txt",warning_message)
         else
-            exechwid=readfile("MoreUNC_HWID\\hwid.txt")
+            exechwid=readfile("MoreUNC_HWID\\"..file)
         end
     end
 	AddElement('gethwid', function()
