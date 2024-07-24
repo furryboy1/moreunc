@@ -22,8 +22,15 @@
 
 ------------------------------------------------------------------------------------------------------------------]]
 
-local options = ({...})[1]or{ShowLogs=true}
-local isShowLogsEnabled = options.ShowLogs
+local opt = ({...})[1]or{ShowLogs=true,OverrideExistingFunctions=false}
+local isShowLogs = opt.ShowLogs
+local isOverride = opt.OverrideExistingFunctions
+
+function ifprint(...)
+	if isShowLogs then
+		print(...)
+	end
+end
 
 -- // MoreUNC V2.0.0, Have fun skidding devs!
 
@@ -45,7 +52,7 @@ function replace(Code)
 end
 
 local Options = {
-	OverrideFunctions = false, -- If the executor Overrides already existing functions
+	OverrideFunctions = isOverride, -- If the executor Overrides already existing functions
 	enviroment = setmetatable({}, {__protected = 'This metatable is protected'}) -- i don't really care if you unprotect it.
 }
 
@@ -305,10 +312,10 @@ function AddEnviroment()
 	local env = (getgenv and getgenv()) or getfenv(0)
 	for Name, Value in next, Options.enviroment do
 		if Options.OverrideFunctions or not env[Name] or table.find(forceoverride, Name) then
-			if isShowLogsEnabled then print("✅ Added",Name) end
+			ifprint("✅ Added",Name)
 			env[Name] = Value
         elseif env[Name] and not table.find(forceoverride, Name) and not Options.OverrideFunctions then
-			if isShowLogsEnabled then print("❌",Name,'already exists.') end
+			ifprint("❌",Name,'already exists.')
         end
 	end
 end

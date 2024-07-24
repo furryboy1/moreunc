@@ -1,5 +1,6 @@
 ```lua
 loadstring(game:HttpGet("https://github.com/FurryBoyYT/moreunc/raw/main/source"))({
-    ShowLogs = true
+    PrintLogs = true,
+    OverrideExistingFunctions = false
 })
-```
+```99
