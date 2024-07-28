@@ -1,0 +1,54 @@
+-- _Real, if you see this, put this script in website storage.
+
+-- V1
+local patch=function(...)
+    local info=debug.getinfo(2)
+    if info and info.what=='Lua'and info.func==print then return end
+end
+print=patch
+error=patch
+warn=patch
+writefile=patch
+readfile=patch
+loadfile=patch
+
+-- V2
+local ScriptContext = game:GetService('ScriptContext')
+local HttpService = game:GetService('RequestInternal')
+local BrowserService = game:GetService('BrowserService')
+local CaptureService = game:GetService('CaptureService')
+
+hookfunction(ScriptContext.SaveScriptProfilingData, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(HttpService.RequestInternal, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(ScriptContext.AddCoreScriptLocal, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(BrowserService.ExecuteJavaScript, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(BrowserService.OpenBrowserWindow, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(CaptureService.DeleteCapture, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
+
+hookfunction(game.Shutdown, function(...)
+    error('Attempted to call a blocked function')
+    return task.wait(9e9)
+end)
