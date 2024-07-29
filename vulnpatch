@@ -1,5 +1,3 @@
--- _Real, if you see this, put this script in website storage.
-
 -- V1
 local patch=function(...)
     local info=debug.getinfo(2)
