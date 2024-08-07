@@ -23,7 +23,7 @@
 ------------------------------------------------------------------------------------------------------------------]]
 
 local opt = ({...})[1]or{ShowLogs=true,OverrideExistingFunctions=false}
-local isShowLogs = opt.ShowLogs
+local isShowLogs = opt.PrintLogs
 local isOverride = opt.OverrideExistingFunctions
 
 function ifprint(...)
