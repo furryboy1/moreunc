@@ -1,6 +1,4 @@
-execName=tostring(identityexecutor())
-count=0
-array={}
-for i,_ in pairs(getgenv())do count+=1 array[count]=i..'\n'end
-out=table.concat(array)
-writefile(execName..'.txt','-- '..execName..' executor functions\n\n'..out)
+e,c,a,g=tostring(identifyexecutor()),0,{},getgenv()
+for i,_ in pairs(g)do c+=1 a[c]=i..'\n'end
+o=table.concat(a)
+writefile(e..'.txt','-- '..e..' executor functions\n\n'..o)
