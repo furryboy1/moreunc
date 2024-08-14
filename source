@@ -253,7 +253,7 @@ ClipboardBox.Parent = ClipboardUI
 local HttpService, DrawingUI = game:GetService('HttpService'), Instance.new("ScreenGui")
 
 -- // Libararies:
-local function_storage={}
+local hooked_functions_storage = {}
 local protected_guis = {}
 
 -- // Events:
@@ -1237,7 +1237,7 @@ AddElement('hookfunction', function()
 	for i,v in pairs(getfenv())do
 		if v==func then 
 			getfenv()[i]=rep
-			function_storage[i]=rep
+			hooked_functions_storage[i]=rep
 			break
 		end
 	end
@@ -1245,7 +1245,7 @@ end)
 AddElement('restorefunction', function()
     for i,v in pairs(getfenv())do
         if v==func then
-            for k,j in pairs(function_storage)do
+            for k,j in pairs(hooked_functions_storage)do
                 if i==k and typeof(k) == "function" then
                     getfenv()[i]=k
                 end
