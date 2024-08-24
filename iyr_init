@@ -1,11 +1,6 @@
--- it's not really necessary to use this script as it is a command for infinite yield reborn script
--- https://github.com/fuckusfm/infiniteyield-reborn
+-- IYR Discontinued but i will still run this because i have the source anyways
 
 loadstring(game:HttpGet("https://github.com/FurryBoyYT/moreunc/raw/main/source"))({
     PrintLogs = true,
     OverrideExistingFunctions = false
 })
-
--- Soon be added: add options in iyr command, for example: ;addunc (ShowLogs: true/false) (Override: true/false)
--- ShowLogs: Shows added functions in console
--- Override: Overrides exising functions for executor
