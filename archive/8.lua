@@ -19,3 +19,5 @@ function misc.hookfunction(func)
 
     return hookedfunc
 end
+
+misc.hookfunction(print, warn)

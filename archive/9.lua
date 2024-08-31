@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://github.com/astacodes/Better-UNC/raw/main/bUNC.lua"))()
