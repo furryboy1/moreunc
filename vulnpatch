@@ -1,4 +1,4 @@
--- V1
+--[[
 local patch=function(...)
     local info=debug.getinfo(2)
     if info and info.what=='Lua'and info.func==print then return end
@@ -9,6 +9,5 @@ warn=patch
 writefile=patch
 readfile=patch
 loadfile=patch
-
--- V2
+--]]
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Intosable/aBlock/main/aBlock.lua"))()
