@@ -1,4 +1,5 @@
 -- https://raw.githubusercontent.com/clipflipzz/vulnerability-test/refs/heads/main/script.luau
+-- loadstring(game:HttpGet("https://github.com/FurryBoyYT/moreunc/raw/main/vulntestsource"))()
 
 local passes, fails, undefined = 0, 0, 0
 local running = 0
