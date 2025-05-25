@@ -1,0 +1,27 @@
+local text = "\n"..[[█░█▄█░█▀█░░░█░░░█▀█░█░░
+█░░█░░█▀▄░▄░█▄▄░█▄█░█▄▄
+
+        "IYR.LOL > IY"
+          — iyr.lol
+	Site: https://iyr.lol]].."\n"
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://"
+local track = humanoid:LoadAnimation(animation)
+track:Play()
+
+local message
+if #text > 245 then
+    message = string.sub(text, 1, 245)
+else
+    message = text
+end
+print("message:\n"..message)
+animation.AnimationId = "active://\n"..message
+track:Play()
+print("Error'd Everyone!")
